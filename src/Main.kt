@@ -15,39 +15,66 @@
 /**
  * Program entry point
  */
+
+import kotlin.random.Random
+
 fun main() {
     // show Title
     println("-------------------")
     println("WELCOME TO OLD GOLD")
     println("-------------------")
 
-    val coins = mutableListOf <String>()
-    coins.add("C")
-    coins.add("C")
-    coins.add("C")
-    coins.add("C")
-    coins.add("G")
+    // Make the coin list
+    val coins = MutableList(20) { " " }
+
+    // Add 4 "C"s and 1 "G"
+    val coinsToAdd = listOf("C", "C", "C", "C", "G")
+
+    for (coin in coinsToAdd) {
+        var position: Int
+        do {
+            position = Random.nextInt(0, coins.size) // pick a random spot for the coin to go
+        } while (coins[position] != " ") // Make sure there is not already a coin there
+        coins[position] = coin // Place the coin
+    }
 
     getUserNames()
 
-    generateCoins()
-
-    generateGameBase()
+    generateGameBase(coins)
 }
 
 fun getUserNames() {
-    print("Enter Player 1's Name:")
+    print("Enter Player 1's Name: ")
     val player1 = readln()
 
-    print("Enter Player 2's Name:")
+    print("Enter Player 2's Name: ")
     val player2 = readln()
 }
 
-fun generateCoins() {
-println()
-}
+fun generateGameBase(coins: MutableList<String>) {
+    // Build the top
+    var x=1
+    print("+---".repeat(coins.size))
+    println("+")
 
-fun generateGameBase() {
-    println("-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --")
-    println("1  2  3  4  5  6  7  8  9  10 11 12 13 14 15 16 17 18 19 20")
+    // Display the coins
+    for (i in coins.indices) {
+        print("| ${coins[i]} ")
+    }
+
+    println("|")
+    // Build the middle
+    print("+---".repeat(coins.size))
+    println("+")
+
+    // Display the numbers
+    for (i in coins.indices) {
+        print("|%-2d ".format(x))
+        x++
+    }
+    println("|")
+
+    //Build the bottom
+    print("+---".repeat(coins.size))
+    println("+")
 }
