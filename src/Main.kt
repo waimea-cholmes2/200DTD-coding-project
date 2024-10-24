@@ -120,7 +120,7 @@ fun playerMove(currentPlayer: String, coins: MutableList<String>): Boolean {
             print("Enter the square number to move the coin to: ")
             val targetSquare = readln().toInt() - 1
 
-            // does the move
+            // Does the move
             validMove = moveCoin(coins, position, targetSquare)
         }
     }
