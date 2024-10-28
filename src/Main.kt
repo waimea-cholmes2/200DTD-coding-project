@@ -140,7 +140,7 @@ fun playerMove(currentPlayer: String, coins: MutableList<String>): Boolean {
 
     return false
 }
-
+//bananas
 fun moveCoin(coins: MutableList<String>, position: Int, newSquare: Int): Boolean {
     // Check if the square has no coin in it already and to the left of the coin's current position
     if (newSquare < 0 || newSquare >= position || coins[newSquare] != " ") {
