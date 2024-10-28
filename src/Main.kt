@@ -21,7 +21,7 @@ import kotlin.random.Random
 fun main() {
     // show Title
     println("----------------------------------")
-    println("       WELCOME TO OLD GOLD")
+    println("       WELCOME TO OLD GOLD        ")
     println("----------------------------------")
 
     // Make the list
@@ -34,7 +34,7 @@ fun main() {
         var position: Int
         do {
             position = Random.nextInt(0, coins.size) // pick a random spot for the coin to go
-        } while (coins[position] != " ") // Make sure there is not already a coin there
+        } while (coins[position] != " ") // Make sure there is not already a coin in the random spot
         coins[position] = coin // Place the coin
     }
 
@@ -140,7 +140,8 @@ fun playerMove(currentPlayer: String, coins: MutableList<String>): Boolean {
 
     return false
 }
-//bananas
+
+
 fun moveCoin(coins: MutableList<String>, position: Int, newSquare: Int): Boolean {
     // Check if the square has no coin in it already and to the left of the coin's current position
     if (newSquare < 0 || newSquare >= position || coins[newSquare] != " ") {
