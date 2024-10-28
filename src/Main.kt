@@ -24,10 +24,10 @@ fun main() {
     println("       WELCOME TO OLD GOLD")
     println("----------------------------------")
 
-    // Make the coin list
+    // Make the list
     val coins = MutableList(20) { " " }
 
-    // Add 4 "C"s and 1 "G"
+    // Add the coins
     val coinsToAdd = listOf("C", "C", "C", "C", "G")
 
     for (coin in coinsToAdd) {
@@ -55,8 +55,14 @@ fun main() {
         // Start the players turns
         game = playerMove(currentPlayer, coins)
 
-        // Swap players after each turn
-        currentPlayer = if (currentPlayer == player1) player2 else player1
+        // Check if a player has won
+        if (game) {
+            println("$currentPlayer wins!!!!")
+        }
+        else {
+            // If no one wins swap the turns
+            currentPlayer = if (currentPlayer == player1) player2 else player1
+        }
     }
 }
 
@@ -100,43 +106,50 @@ fun generateGameBase(coins: MutableList<String>) {
 }
 
 fun playerMove(currentPlayer: String, coins: MutableList<String>): Boolean {
-    var validMove = false
-    while (!validMove) {
+    var move = false
+    while (!move) {
         print("Enter the position of the coin you'd like to move or remove: ")
         val position = readln().toInt() - 1
 
         if (position !in coins.indices || coins[position] == " ") {
-            println("Invalid move. Please select a square with a coin.")
+            println("Nuh uh. Please select a square with a coin.")
             continue
         }
 
         if (position == 0) {
             // Check if it's in position 1 and remove it
             println("$currentPlayer has removed a coin")
+            val removedCoin = coins[0]
             coins[0] = " "
+            // Check if the removed coin was the gold coin.
+            if (removedCoin == "G") {
+                return true
+            } else {
+                return false
+            }
         }
         else {
             // Ask player which square they want to move the coin to
             print("Enter the square number to move the coin to: ")
-            val targetSquare = readln().toInt() - 1
+            val newSquare = readln().toInt() - 1
 
             // Does the move
-            validMove = moveCoin(coins, position, targetSquare)
+            move = moveCoin(coins, position, newSquare)
         }
     }
 
     return false
 }
 
-fun moveCoin(coins: MutableList<String>, position: Int, targetSquare: Int): Boolean {
+fun moveCoin(coins: MutableList<String>, position: Int, newSquare: Int): Boolean {
     // Check if the square has no coin in it already and to the left of the coin's current position
-    if (targetSquare < 0 || targetSquare >= position || coins[targetSquare] != " ") {
+    if (newSquare < 0 || newSquare >= position || coins[newSquare] != " ") {
         println("Invalid move. You can only move the coin to an empty square on the left.")
         return false
     }
 
     // Check if there are any coins between current square and target square
-    for (i in (targetSquare + 1)..<position) {
+    for (i in (newSquare + 1)..<position) {
         if (coins[i] != " ") {
             println("Invalid move. You cannot jump over another coin.")
             return false
@@ -144,7 +157,7 @@ fun moveCoin(coins: MutableList<String>, position: Int, targetSquare: Int): Bool
     }
 
     // Move the coin to the new square
-    coins[targetSquare] = coins[position]
+    coins[newSquare] = coins[position]
     coins[position] = " "
     return true
 }
