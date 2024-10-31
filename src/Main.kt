@@ -5,9 +5,9 @@
  *
  * By Cooper Holmes
  *
- * BRIEF PROJECT DESCRIPTION HERE
- * BRIEF PROJECT DESCRIPTION HERE
- * BRIEF PROJECT DESCRIPTION HERE
+ * This is a two player game where the aim is to be the player who wins by
+ * removing the gold coin a number of coins are randomly placed inside a
+ * one dimensional game board
  * ------------------------------------------------------------------------
  */
 
@@ -19,26 +19,35 @@
 import kotlin.random.Random
 
 fun main() {
-    // show Title
+    // Show title
     println("----------------------------------")
     println("       WELCOME TO OLD GOLD        ")
     println("----------------------------------")
 
-    // Make the list
+    // Print the description and instructions
+    println("Description and instructions")
+
+    // Mask how big they want the game to be
     var gameSize = forceNumber("How big do you want the board to be from 5-20?:")
-    //ensure the game is not too big or small
+
+    // Make sure the game is not too big or small
     while (gameSize !in 5..20) {
-        println("Sorry :( Grid size must be between 5 and 20.")
+        println("Sorry :( The board's size must be between 5 and 20.")
         gameSize = forceNumber("How big do you want the board to be from 5-20?:")
     }
+
+    // Make the list
     val coins = MutableList(gameSize) { " " }
 
-    // ask the player for the total number of coins (including one gold coin)
+    // ask the player for the total number of coins (including the gold coin)
     var totalCoins = forceNumber("Enter the total number of coins (minimum 2, has to be smaller than the game board): ")
-    while (totalCoins !in 2..<gameSize - 1) {
+
+    // make sure there is not too many or too little coins
+    while (totalCoins !in 2..<gameSize) {
         println("sorry :( the amount of coins has to be smaller than the game board by at least one, and has to be a minimum of 2")
         totalCoins = forceNumber("Enter the total number of coins (minimum 2, has to be smaller than the game board): ")
     }
+
     val nonGoldCoins = totalCoins - 1 // One of the coins will be gold
 
     // Create a list with one gold coin and the number of regular coins
@@ -81,14 +90,21 @@ fun main() {
 }
 
 fun getUserNames(): Pair<String, String> {
-    print("Enter Player 1's Name: ")
-    val player1 = readln().capitalize()
+    while (true) {
+        print("Enter Player 1's Name: ")
+        val player1 = readln().capitalize()
 
-    print("Enter Player 2's Name: ")
-    val player2 = readln().capitalize()
+        print("Enter Player 2's Name: ")
+        val player2 = readln().capitalize()
 
-    println("Welcome $player1 and $player2")
-    return Pair(player1, player2)
+        //check if the names are the same
+        if (player1 != player2) {
+            println("Welcome $player1 and $player2!")
+            return Pair(player1, player2) // Names are different, continue
+        } else {
+            println("Names cannot be the same. Please enter different names or maybe add a 1 to the end of one of your names") // Names are different, re ask
+        }
+    }
 }
 
 fun generateGameBase(coins: MutableList<String>) {
@@ -128,6 +144,12 @@ fun playerMove(currentPlayer: String, coins: MutableList<String>): Boolean {
         // Check if the selected square has a coin in it
         if (position !in coins.indices || coins[position] == " ") {
             println("Nuh uh. Please select a square with a coin.")
+            continue
+        }
+
+        // Check if the coin has any possible moves
+        if (position > 0 && coins[position - 1] != " ") {
+            println("Sorry that coin has no possible moves")
             continue
         }
 
