@@ -24,16 +24,22 @@ fun main() {
     println("       WELCOME TO OLD GOLD        ")
     println("----------------------------------")
 
-    // Print the description and instructions
-    println("Description and instructions")
+    //Add a small break
+    Thread.sleep(2000)
 
-    // Mask how big they want the game to be
-    var gameSize = forceNumber("How big do you want the board to be from 5-20?:")
+    // Print the description and instructions
+    println("Two players are to compete to remove the Gold Coin from the number 1 square and win the game.")
+    println("One gold coin and the other regular coins are randomly placed on the board. The goal is for you")
+    println("to remove the Gold Coin from the number 1 square. Each turn, you’ll either move a coin left to an")
+    println("open square (without jumping over others) or remove a coin.")
+
+    // Ask how big they want the game to be
+    var gameSize = forceNumber("How big do you want the board to be from 5-40?:")
 
     // Make sure the game is not too big or small
-    while (gameSize !in 5..20) {
-        println("Sorry :( The board's size must be between 5 and 20.")
-        gameSize = forceNumber("How big do you want the board to be from 5-20?:")
+    while (gameSize !in 5..40) {
+        println("Sorry :( The board's size must be between 5 and 40.")
+        gameSize = forceNumber("How big do you want the board to be from 5-40?:")
     }
 
     // Make the list
@@ -44,7 +50,7 @@ fun main() {
 
     // make sure there is not too many or too little coins
     while (totalCoins !in 2..<gameSize) {
-        println("sorry :( the amount of coins has to be smaller than the game board by at least one, and has to be a minimum of 2")
+        println("Sorry. the amount of coins has to be smaller than the game board by at least one, and has to be a minimum of 2")
         totalCoins = forceNumber("Enter the total number of coins (minimum 2, has to be smaller than the game board): ")
     }
 
@@ -72,6 +78,9 @@ fun main() {
     while (!game) {
         println("\n$currentPlayer's turn!")
 
+        // Add another small break to ensure they can see everything
+        Thread.sleep(1000)
+
         // Generate the board
         generateGameBase(coins)
 
@@ -80,7 +89,8 @@ fun main() {
 
         // Check if a player has won
         if (game) {
-            println("$currentPlayer wins!!!!")
+            println("$currentPlayer Wins!!!!")
+            println("Great Job!!!")
         }
         else {
             // If no one wins swap the turns
@@ -156,6 +166,9 @@ fun playerMove(currentPlayer: String, coins: MutableList<String>): Boolean {
         // Check if it's in position 1 and remove it
         if (position == 0) {
             println("$currentPlayer has removed a coin")
+
+            //Another little break
+            Thread.sleep(500)
             val removedCoin = coins[0]
             coins[0] = " "
             // Check if the removed coin was the gold coin.

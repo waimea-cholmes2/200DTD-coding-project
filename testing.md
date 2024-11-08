@@ -4,18 +4,16 @@
 
 The project involves the programming of a two-player game.
 
-BRIEF DESCRIPTION OF GAME HERE
-BRIEF DESCRIPTION OF GAME HERE
-BRIEF DESCRIPTION OF GAME HERE
+In this game the two players compete to be the first player to remove the gold coin from the grid, the gold coin can be surrounded by other coins and when those other coins are removed it does not effect the outcome of the game, coins can only be moved to open squares on th left and they cannot jump over other coins
 
 ### Game Features and Rules
 
 The game has the following features and/or rules:
 
-- GAME FEATURE / RULE
-- GAME FEATURE / RULE
-- GAME FEATURE / RULE
-- GAME FEATURE / RULE
+- The two players have the first turn chosen randomly, then it alternates until one player wins
+- The coins are placed randomly after the players decide the grid size and amount of coins
+- The game prevents player from making illegal moves like trying to move a coin backwards or off the grid or over another coin or onto another coin
+- The players cannot have the same name, and if they do they are asked to modify one of their names
 
 ---
 
