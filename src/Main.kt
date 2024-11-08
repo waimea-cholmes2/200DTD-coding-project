@@ -31,14 +31,14 @@ fun main() {
     println("Two players are to compete to remove the Gold Coin from the number 1 square and win the game.")
     println("One gold coin and the other regular coins are randomly placed on the board. The goal is for you")
     println("to remove the Gold Coin from the number 1 square. Each turn, you’ll either move a coin left to an")
-    println("open square (without jumping over others) or remove a coin.")
+    println("open square (without jumping over others) or remove a coin(removing a coin takes a whole turn)")
 
     // Ask how big they want the game to be
     var gameSize = forceNumber("How big do you want the board to be from 5-40?:")
 
     // Make sure the game is not too big or small
     while (gameSize !in 5..40) {
-        println("Sorry :( The board's size must be between 5 and 40.")
+        println("Sorry. The board's size must be between 5 and 40.")
         gameSize = forceNumber("How big do you want the board to be from 5-40?:")
     }
 
@@ -46,12 +46,12 @@ fun main() {
     val coins = MutableList(gameSize) { " " }
 
     // ask the player for the total number of coins (including the gold coin)
-    var totalCoins = forceNumber("Enter the total number of coins (minimum 2, has to be smaller than the game board): ")
+    var totalCoins = forceNumber("Enter the total number of coins (minimum 2, has to be smaller than the game board($gameSize)): ")
 
     // make sure there is not too many or too little coins
     while (totalCoins !in 2..<gameSize) {
         println("Sorry. the amount of coins has to be smaller than the game board by at least one, and has to be a minimum of 2")
-        totalCoins = forceNumber("Enter the total number of coins (minimum 2, has to be smaller than the game board): ")
+        totalCoins = forceNumber("Enter the total number of coins (minimum 2, has to be smaller than the game board($gameSize)): ")
     }
 
     val nonGoldCoins = totalCoins - 1 // One of the coins will be gold
@@ -107,6 +107,12 @@ fun getUserNames(): Pair<String, String> {
         print("Enter Player 2's Name: ")
         val player2 = readln().capitalize()
 
+        // Make sure the names are not empty
+        if (player1.isEmpty() || player2.isEmpty()) {
+            println("Sorry but your names cannot be empty.")
+            continue
+        }
+
         //check if the names are the same
         if (player1 != player2) {
             println("Welcome $player1 and $player2!")
@@ -153,7 +159,7 @@ fun playerMove(currentPlayer: String, coins: MutableList<String>): Boolean {
 
         // Check if the selected square has a coin in it
         if (position !in coins.indices || coins[position] == " ") {
-            println("Nuh uh. Please select a square with a coin.")
+            println("Please select a square with a coin.")
             continue
         }
 
